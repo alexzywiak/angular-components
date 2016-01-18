@@ -1,16 +1,22 @@
 import _ from 'lodash';
 
-export class BlogController {
-  constructor() {
-    this.message = 'The latest from the blog';
+class BlogController {
+  constructor(Post) {
 
-    this.posts = _.times(9, ()=> {
-      return {
-        author: 'Casidy James',
-        title: 'What\'s new in Angular 3'
-      };
+    this.Post = Post;
+    this.getPosts();
+    this.posts = [];
+  }
+
+  getPosts() {
+    this.Post.get().then(() => {
+      this.posts = this.Post.getState();
     });
   }
 }
 
+BlogController.$inject = ['Posts'];
 
+export {
+  BlogController
+};
