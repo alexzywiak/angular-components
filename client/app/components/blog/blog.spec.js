@@ -24,10 +24,25 @@ describe('Blog', () => {
   describe('directive', ()=> {
     // TODO: test the directive to make sure it has the
     // right DDO and template and controller
+    let ddo;
+    beforeEach(() => {
+      ddo = blogDirective();
+    });
+
+    it('should do something', function(){
+      expect(ddo.controller).to.equal(BlogController);
+      expect(ddo.template).to.equal(template);
+    });
   });
 
   describe('controller', ()=> {
     // TODO: test the controller
+    it('should have some sweet stuff', function(){
+      const controller = makeController();
+      expect(controller.message).to.equal('The latest from the blog');
+      expect(controller.posts.length).to.equal(9);
+      expect(controller.posts[0].author).to.equal('Casidy James')
+    });
   });
 
   describe('template', ()=> {

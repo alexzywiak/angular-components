@@ -14,39 +14,49 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-    files: [
-        { /*'change to the spec bundle',*/ watched: false }
-    ],
+    files: [{
+      pattern: './spec.bundle.js',
+      watched: false
+    }],
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     // use webpack and sourcemaps to preprocess the spec bundle file
     preprocessors: {
-        'spec.bundle.js': ['webpack', 'sourcemap']
+      'spec.bundle.js': ['webpack', 'sourcemap']
     },
 
-    webpack :{
-        devtool: 'inline-source-map',
-        module: {
-            loaders: [
-                /* add the appropriate loaders */
-                /* almost the same as the webpack.config */
-            ]
-        },
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [{
+          test: /\.html$/,
+          loader: 'raw'
+        }, {
+          test: /\.styl$/,
+          loader: 'style!css!stylus'
+        }, {
+          test: /\.css/,
+          loader: 'style!css'
+        }, {
+          test: /\.js$/,
+          loader: 'babel?stage=1',
+          exclude: [/client\/lib/, /node_modules/]
+        }]
+      },
 
-        stylus: {
-            use: [require('jeet')(), require('rupture')()]
-        }
+      stylus: {
+        use: [require('jeet')(), require('rupture')()]
+      }
     },
 
     webpackServer: {
-        noInfo: true
+      noInfo: true
     },
     // test results reporter to use
     // possible values: 'dots', 'progress'
